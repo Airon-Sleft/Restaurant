@@ -7,6 +7,9 @@ TagManager:
   - Exit
   - Table
   - Visitor
+  - ship
+  - asteroid
+  - Waiter
   layers:
   - Default
   - TransparentFX

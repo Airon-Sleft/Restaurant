@@ -53,11 +53,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+	private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Table"))
         {
-            sceneManager.GetComponent<Manager>().onPlayerGotTable(gameObject);
+            //sceneManager.GetComponent<Manager>().onPlayerGotTable(gameObject);
         }
         else if (collision.gameObject.CompareTag("Visitor"))
         {

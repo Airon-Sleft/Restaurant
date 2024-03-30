@@ -1,3 +1,5 @@
+using Restaurant.Entity;
+using Restaurant.General;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,26 +12,22 @@ public class Manager : MonoBehaviour
     private GameObject player;
     private IObjectPooler objectPoolerVisitor;
     private IObjectPooler objectPoolerTable;
-
-    private List<Vector3> tablePos = new List<Vector3> { 
-        new Vector3 (-10, 0.22f, 1.8f),
-        new Vector3 (-10, 0.22f, -5.5f),
-        new Vector3 (10, 0.22f, -5.5f),
-        new Vector3 (10, 0.22f, 1.8f),
-    };
+    public Config config;
+    public static Manager Instance { get; private set; }
 
     private List<GameObject> visitorsList = new List<GameObject>();
     private List<GameObject> tableList = new List<GameObject>();
 
 
-    private Vector3 visitorSpawnPos = new Vector3(0, 1, -6.5f);
-    void Start()
+    void Awake()
     {
-        objectPoolerVisitor = ObjectPoolFactory.Create(visitorPrefab, ObjectPoolFactory.POOLER_TYPE.EMPTY_ON_START);
-        objectPoolerTable = ObjectPoolFactory.Create(tablePrefab, ObjectPoolFactory.POOLER_TYPE.EMPTY_ON_START);
+        Instance = this;
+        objectPoolerVisitor = ObjectPoolFactory.Create(config.visitorPrefab, ObjectPoolFactory.POOLER_TYPE.EMPTY_ON_START);
+        objectPoolerTable = ObjectPoolFactory.Create(config.tablePrefab, ObjectPoolFactory.POOLER_TYPE.EMPTY_ON_START);
+
         player = GameObject.Find("Player");
-        CreateVisitors(1);
-        foreach (Vector3 pos in tablePos)
+        //CreateVisitors(1);
+        foreach (Vector3 pos in config.tablesPosition)
         {
             CreateTable(pos);
         }
@@ -41,7 +39,7 @@ public class Manager : MonoBehaviour
         for (int i = 0; i < visitorCount; i++)
         {
             GameObject visitor = objectPoolerVisitor.GetObject();
-            visitor.transform.position = visitorSpawnPos;
+            visitor.transform.position = config.visitorSpawn[0];
             visitor.transform.rotation = visitorPrefab.transform.rotation;
             visitorsList.Add(visitor);
         }
@@ -72,9 +70,10 @@ public class Manager : MonoBehaviour
         Debug.Log("DONE");
         DeleteVisitor(visitor);
     }
-    public void onPlayerGotTable(GameObject player)
+    public void onPlayerGotTable(IVisitorSpace visitorSpace, GameObject player)
     {
         Debug.Log("Player got a TABLE");
+        visitorSpace.SetState(VisitorSpace.TABLE_STATE.WAIT_FOR_ACTION);
     }
     public void onPlayerGotVisitor(GameObject player)
     {

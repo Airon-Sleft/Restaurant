@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dba5a5c5eda59ea45b2bce0f36843aca, type: 3}
+  m_Name: LevelConfig
+  m_EditorClassIdentifier: 
+  tablePrefab: {fileID: 8811958892619798349, guid: dddb4a0fd4eb3dc459bc02b47f8f6750, type: 3}
+  visitorPrefab: {fileID: 7160816574147422146, guid: 5529d490e4041894ba598daac3a49c46, type: 3}
+  waiterPrefab: {fileID: 8210378234186278386, guid: d357c0f5de36fcc46bf0d87862bc10ed, type: 3}
+  tableMarkPrefabs:
+  - {fileID: 1677068055615124, guid: a0170f707699b8242ad9cc66ddbf42b2, type: 3}
+  - {fileID: 1854682910007996, guid: f36782bf2e630b541b1920c182e4eaab, type: 3}
+  tablesPosition:
+  - {x: -10, y: 0.22, z: 1.8}
+  - {x: -10, y: 0.22, z: -5.5}
+  - {x: 10, y: 0.22, z: -5.5}
+  - {x: 10, y: 0.22, z: 1.8}
+  visitorSpawn:
+  - {x: 0, y: 1, z: -6.5}
