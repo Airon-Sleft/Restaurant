@@ -34,4 +34,13 @@ public class Manager : MonoBehaviour
     {
         Debug.Log("Player got a visitor ");
     }
+    public void onWaiterGotKitchen(IUnit waiter)
+    {
+        Debug.Log("Waiter got the kitchen");
+    }
+
+    public void onWaiterGotCashZone(IUnit waiter)
+    {
+        Debug.Log("Waiter got the CASH zone");
+    }
 }

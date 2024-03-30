@@ -3,7 +3,7 @@ public class UserControl : MonoBehaviour
 {
 	[SerializeField] private Camera gameCamera;
 	public GameObject Unit;
-	private void Awake()
+	private void Awake() // not refactored , yet
 	{
 		Unit = GameObject.Find("Player");
 	}
