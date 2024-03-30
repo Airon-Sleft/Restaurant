@@ -11,7 +11,7 @@ namespace Restaurant.Entity
 
 		protected override void OnWaiterGotSpace(GameObject waiter)
 		{
-			Manager.Instance.onPlayerGotTable(this, waiter);
+			Manager.Instance.onPlayerGotTable(this, waiter.GetComponentInParent<IUnit>());
 		}
 	}
 }

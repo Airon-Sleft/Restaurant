@@ -26,7 +26,7 @@ public class Manager : MonoBehaviour
         objectPoolerTable = ObjectPoolFactory.Create(config.tablePrefab, ObjectPoolFactory.POOLER_TYPE.EMPTY_ON_START);
 
         player = GameObject.Find("Player");
-        //CreateVisitors(1);
+        CreateVisitors(1);
         foreach (Vector3 pos in config.tablesPosition)
         {
             CreateTable(pos);
@@ -70,13 +70,13 @@ public class Manager : MonoBehaviour
         Debug.Log("DONE");
         DeleteVisitor(visitor);
     }
-    public void onPlayerGotTable(IVisitorSpace visitorSpace, GameObject player)
+    public void onPlayerGotTable(IVisitorSpace visitorSpace, IUnit waiter)
     {
         Debug.Log("Player got a TABLE");
         visitorSpace.SetState(VisitorSpace.TABLE_STATE.WAIT_FOR_ACTION);
     }
-    public void onPlayerGotVisitor(GameObject player)
+    public void onPlayerGotVisitor(IUnit visitor, IUnit waiter)
     {
-        Debug.Log("Player got a visitor");
+        Debug.Log("Player got a visitor ");
     }
 }
