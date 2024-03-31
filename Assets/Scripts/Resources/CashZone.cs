@@ -11,7 +11,7 @@ namespace Restaurant.Resources
 		}
 		protected override void OnWaiterGotZone(IUnit waiter)
 		{
-			Manager.Instance.onWaiterGotCashZone(waiter);
+			Manager.Instance.OnWaiterGotCashZone(waiter);
 		}
 	}
 }

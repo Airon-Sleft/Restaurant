@@ -11,7 +11,7 @@ namespace Restaurant.Resources
 
 		protected void AddResource(Resource.RES_TYPE resType, IUnit targetUnit)
 		{
-			Resource res = new Resource(resType, targetUnit);
+			Resource res = new Resource(resType, targetUnit, gameObject);
 			_resources.Add(res);
 		}
 		private void OnTriggerEnter(Collider other)
@@ -27,6 +27,7 @@ namespace Restaurant.Resources
 			{
 				Resource res = _resources.FirstOrDefault();
 				_resources.Remove(res);
+				res.DestroyObject();
 				return res;
 			}
 			return null;

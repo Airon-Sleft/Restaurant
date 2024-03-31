@@ -1,45 +1,43 @@
 using Restaurant.Entity;
 using Restaurant.General;
+using Restaurant.Resources;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Manager : MonoBehaviour
 {
-    public Config config;
+    [SerializeField] private Config config;
+    public Config Config {  get { return config; } }
     public static Manager Instance { get; private set; }
-    private LevelHandler _levelHandler;
+    public LevelHandler LevelHandler { get; private set; }
+    private float _lastUpdateTime;
+
 
     void Awake()
     {
         Instance = this;
-        _levelHandler = new LevelHandler();
+        LevelHandler = new LevelHandler();
     }
 
-    public void onVisitorGotTable(GameObject visitor)
-    {
-        Debug.Log("GOT TABLE");
-    }
+	private void Update()
+	{
+		if (Time.time - _lastUpdateTime >= 1.0f)
+        {
+            _lastUpdateTime = Time.time;
+        }
+	}
 
-    public void onVisitorGotExit(GameObject visitor)
+    public void OnWaiterGotKitchen(KitchenZone kitchen, Waiter waiter)
     {
-        Debug.Log("DONE");
+        if (!waiter.IsHandFree()) Debug.Log("Free you hands at first");
+        kitchen.AddFood(waiter.GetVisitor());
+        //Resource res = kitchen.TakeIfPossible();
+        //if (res == null) Debug.Log("There is no food");
+        //waiter.AddResource(res);
+        //Debug.Log("Go to visitor");
     }
-    public void onPlayerGotTable(IVisitorSpace visitorSpace, IUnit waiter)
-    {
-        Debug.Log("Player got a TABLE");
-        visitorSpace.SetState(VisitorSpace.TABLE_STATE.WAIT_FOR_ACTION);
-    }
-    public void onPlayerGotVisitor(IUnit visitor, IUnit waiter)
-    {
-        Debug.Log("Player got a visitor ");
-    }
-    public void onWaiterGotKitchen(IUnit waiter)
-    {
-        Debug.Log("Waiter got the kitchen");
-    }
-
-    public void onWaiterGotCashZone(IUnit waiter)
+    public void OnWaiterGotCashZone(IUnit waiter)
     {
         Debug.Log("Waiter got the CASH zone");
     }

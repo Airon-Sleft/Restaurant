@@ -9,6 +9,9 @@ namespace Restaurant.General
 		public GameObject tablePrefab;
 		public GameObject visitorPrefab;
 		public GameObject waiterPrefab;
+		public GameObject foodPrefab;
+		public GameObject KitchenPrefab;
+		public GameObject CashZonePrefab;
 
 		public GameObject[] tableMarkPrefabs;
 		public List<Vector3> tablesPosition;

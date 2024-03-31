@@ -6,20 +6,23 @@ namespace Restaurant.Entity
 	public class UnityMove
 	{
 		private NavMeshAgent m_Agent;
+		private bool _needAutoClear;
 		public UnityMove(NavMeshAgent agent)
 		{
 			m_Agent = agent;
 		}
-		public void SetDistination(Vector3 destination)
+		public void SetDestination(GameObject gameObjectToFollow, float stoppingDistance = 1.0f)
+		{
+			SetDestination(gameObjectToFollow.transform.position, stoppingDistance);
+		}
+		public void SetDestination(Vector3 destination, float stoppingDistance = 1.5f)
 		{
 			m_Agent.SetDestination(destination);
+			m_Agent.stoppingDistance = stoppingDistance;
 		}
-		public void Update()
+		public void ClearDestination()
 		{
-			if (m_Agent.hasPath && m_Agent.remainingDistance < 1.5)
-			{
-				m_Agent.ResetPath();
-			}
+			m_Agent.ResetPath();
 		}
 		public float GetSpeed()
 		{

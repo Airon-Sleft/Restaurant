@@ -6,23 +6,30 @@ public abstract class Unit : MonoBehaviour, IUnit
 {
 	private Animator animator;
 	private UnityMove _uMove;
-	public void Awake()
+	protected virtual void Awake()
 	{
 		animator = GetComponentInChildren<Animator>();
 		_uMove = new UnityMove(gameObject.GetComponent<NavMeshAgent>());
 	}
-	public void SetDestination(Vector3 destination)
+	public void SetDestination(GameObject objectToFollow, float distanceStop = 1.0f)
 	{
-		_uMove.SetDistination(destination);
+		SetDestination(objectToFollow.transform.position, distanceStop);
+	}
+	public void SetDestination(Vector3 destination, float distanceStop = 1.0f)
+	{
+		_uMove.SetDestination(destination, distanceStop);
+	}
+	public void ClearDestination()
+	{
+		_uMove.ClearDestination();
 	}
 	private void Update()
 	{
-		_uMove.Update();
 		CheckAnimation();
 	}
-	private void CheckAnimation()
+	protected void CheckAnimation()
 	{
-        if ( _uMove.GetSpeed() > 1.0f)
+        if (_uMove.GetSpeed() > 0.2f)
         {
 			animator.SetFloat("Speed_f", 0.3f);
         }
@@ -30,5 +37,9 @@ public abstract class Unit : MonoBehaviour, IUnit
 		{
 			animator.SetFloat("Speed_f", 0);
 		}
+	}
+	public Vector3 GetPos()
+	{
+		return transform.position;
 	}
 }
