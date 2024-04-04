@@ -1,3 +1,4 @@
+using Restaurant.Data;
 using Restaurant.Entity;
 using Restaurant.General;
 using Restaurant.Resources;
@@ -14,13 +15,19 @@ public class Manager : MonoBehaviour
     public LevelHandler LevelHandler { get; private set; }
     private float _lastUpdateTime;
 
+    private PlayerData _playerData;
+    private DataManager _dataManager;
 
     void Awake()
     {
         Instance = this;
         LevelHandler = new LevelHandler();
         LevelManager = LevelHandler.GetLevelManager();
+        _dataManager = new DataManager();
+        _dataManager.LoadAll();
+        _playerData = _dataManager.Get<PlayerData>();
     }
+    
 
 	private void Update()
 	{
