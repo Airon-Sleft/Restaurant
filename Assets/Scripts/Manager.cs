@@ -10,6 +10,7 @@ public class Manager : MonoBehaviour
     [SerializeField] private Config config;
     public Config Config {  get { return config; } }
     public static Manager Instance { get; private set; }
+    public static LevelManager LevelManager { get; private set; }
     public LevelHandler LevelHandler { get; private set; }
     private float _lastUpdateTime;
 
@@ -18,6 +19,7 @@ public class Manager : MonoBehaviour
     {
         Instance = this;
         LevelHandler = new LevelHandler();
+        LevelManager = LevelHandler.GetLevelManager();
     }
 
 	private void Update()
@@ -27,18 +29,4 @@ public class Manager : MonoBehaviour
             _lastUpdateTime = Time.time;
         }
 	}
-
-    public void OnWaiterGotKitchen(KitchenZone kitchen, Waiter waiter)
-    {
-        if (!waiter.IsHandFree()) Debug.Log("Free you hands at first");
-        kitchen.AddFood(waiter.GetVisitor());
-        //Resource res = kitchen.TakeIfPossible();
-        //if (res == null) Debug.Log("There is no food");
-        //waiter.AddResource(res);
-        //Debug.Log("Go to visitor");
-    }
-    public void OnWaiterGotCashZone(IUnit waiter)
-    {
-        Debug.Log("Waiter got the CASH zone");
-    }
 }

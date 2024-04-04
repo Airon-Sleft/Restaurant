@@ -13,14 +13,21 @@ namespace Restaurant.General
 		private LevelCreator _levelCreator;
 		private KitchenZone _kitchen;
 		private CashZone _cashZone;
+		private LevelManager _levelManager;
+		private GameObject _exitObject;
 		public LevelHandler()
 		{
 			_levelCreator = new LevelCreator();
 			_tables = _levelCreator.CreateTables();
 			_kitchen = _levelCreator.CreateKitchen();
 			_cashZone = _levelCreator.CreateCashZone();
-
+			_exitObject = _levelCreator.CreateExit();
+			_levelManager = new LevelManager(_kitchen, _cashZone, _exitObject);
 			AddVisitor();
+		}
+		public LevelManager GetLevelManager()
+		{
+			return _levelManager;
 		}
 		public void AddVisitor()
 		{

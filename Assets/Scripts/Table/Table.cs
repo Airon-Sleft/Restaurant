@@ -17,7 +17,10 @@ namespace Restaurant.Entity
 			}
 			else if (waiter.GetVisitor() == null && _currentState == TABLE_STATE.WAIT_FOR_ACTION)
 			{
-
+				if (waiter.GetResource().IsCorrectVisitor(_currentVisitor))
+				{
+					_currentVisitor.OnWaiterBringSomething(waiter);
+				}
 			}
 		}
 	}

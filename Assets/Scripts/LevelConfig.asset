@@ -16,8 +16,10 @@ MonoBehaviour:
   visitorPrefab: {fileID: 7160816574147422146, guid: 5529d490e4041894ba598daac3a49c46, type: 3}
   waiterPrefab: {fileID: 8210378234186278386, guid: d357c0f5de36fcc46bf0d87862bc10ed, type: 3}
   foodPrefab: {fileID: 4466330037256825675, guid: 7192f5c4c4238564c867a0d6a18fa82d, type: 3}
+  BillPrefab: {fileID: 7111720397395661363, guid: ae6bd6d508839b34b9d33bec6f085960, type: 3}
   KitchenPrefab: {fileID: 2300399783619926949, guid: 048c5fb86309f61429f8d3a6f6f3824d, type: 3}
   CashZonePrefab: {fileID: 6272187390054185518, guid: df72520f87a0c9a4a863e7c4d088ad6c, type: 3}
+  ExitPrefab: {fileID: 609390201678300005, guid: 5d1af66edc9380a48a27feee04076411, type: 3}
   tableMarkPrefabs:
   - {fileID: 1677068055615124, guid: a0170f707699b8242ad9cc66ddbf42b2, type: 3}
   - {fileID: 1854682910007996, guid: f36782bf2e630b541b1920c182e4eaab, type: 3}
@@ -28,3 +30,5 @@ MonoBehaviour:
   - {x: 10, y: 0.22, z: 1.8}
   visitorSpawn:
   - {x: 0, y: 1, z: -6.5}
+  FoodBuildTime: 2
+  BillBuildTime: 1

@@ -30,5 +30,10 @@ namespace Restaurant.General
 			var config = Manager.Instance.Config;
 			return GameObject.Instantiate(config.CashZonePrefab, config.CashZonePrefab.transform.position, config.CashZonePrefab.transform.rotation).GetComponent<CashZone>();
 		}
+		public GameObject CreateExit()
+		{
+			var config = Manager.Instance.Config;
+			return GameObject.Instantiate(config.ExitPrefab, config.ExitPrefab.transform.position, config.ExitPrefab.transform.rotation);
+		}
 	}
 }

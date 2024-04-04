@@ -13,6 +13,7 @@ namespace Restaurant.Entity
 		{
 			if (!IsHandFree()) return false;
 			_resInHand = resource;
+			animator.SetInteger("WeaponType_int", 1);
 			return true;
 		}
 		public Resource GetResource()
@@ -21,6 +22,7 @@ namespace Restaurant.Entity
 		}
 		public void ClearResource()
 		{
+			animator.SetInteger("WeaponType_int", 0);
 			_resInHand = null;
 		}
 		public void SetVisitor(Visitor visitor)

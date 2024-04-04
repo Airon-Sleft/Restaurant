@@ -1,35 +1,33 @@
 ﻿using Restaurant.General;
+using System.Collections.Generic;
 using UnityEngine;
 namespace Restaurant.Entity
 {
-	public class Visitor : Unit
+	public class Visitor : Unit,IVisitor
 	{
-		public enum STATE
-		{
-			EMPTY,
-			MOVING_TO_TABLE,
-			SEAT,
-			MOVING_TO_EXIT,
-		}
 		private IVisitorLoop _visitorLoop;
 		protected override void Awake()
 		{
 			base.Awake();
 			_visitorLoop = VisitorLoopFactory.Create(this, VisitorLoopFactory.BEHAVIOR.DEFAULT);
 		}
-		private STATE _actualState;
 		private IVisitorSpace _currentVisitorSpace;
 		private void OnTriggerEnter(Collider other)
 		{
-			if (_actualState != STATE.EMPTY) return;
 			if (other.gameObject.CompareTag("Waiter"))
 			{
+				if (_visitorLoop.CurrentState != VisitorLoop.VISITOR_STATE.FREE) return;
 				_visitorLoop.OnGotWaiter(other.gameObject.GetComponent<Waiter>());
 			}
 			else if (other.gameObject.CompareTag("Exit"))
 			{
+				if (_visitorLoop.CurrentState != VisitorLoop.VISITOR_STATE.GOING_TO_EXIT) return;
 				_visitorLoop.OnGotExit();
 			}
+		}
+		public void OnWaiterBringSomething(Waiter waiter)
+		{
+			_visitorLoop.OnWaiterBringSomething(waiter);
 		}
 		public void OnGotTable(IVisitorSpace visitorSpace)
 		{
@@ -41,15 +39,17 @@ namespace Restaurant.Entity
 		}
 		public void SeatToTable(IVisitorSpace visitorSpace)
 		{
-			_actualState = STATE.SEAT;
 			_currentVisitorSpace = visitorSpace;
 			ClearDestination();
 			visitorSpace.SeatVisitor(this);
 		}
 		public void TakeFromTable()
 		{
-			_actualState = STATE.EMPTY;
 			_currentVisitorSpace.ClearVisitor();
+		}
+		public IVisitorSpace GetTable()
+		{
+			return _currentVisitorSpace;
 		}
 		private void Update()
 		{

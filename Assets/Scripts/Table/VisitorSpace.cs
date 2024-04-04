@@ -14,7 +14,7 @@ namespace Restaurant.Entity
 		}
 		protected TABLE_STATE _currentState;
 		protected VisitorSpaceStateMark _bottomMark;
-		private Visitor _currentVisitor;
+		protected Visitor _currentVisitor;
 		void Awake()
 		{
 			_bottomMark = new VisitorSpaceStateMark(Manager.Instance.Config.tableMarkPrefabs, gameObject);
@@ -52,7 +52,7 @@ namespace Restaurant.Entity
 		}
 		public Vector3 GetPos()
 		{
-			return transform.position;
+			return transform.position + transform.TransformPoint(new Vector3(0,0,-1.0f));
 		}
 		public void PutToVisitorPos(GameObject visitorObject)
 		{
@@ -66,6 +66,10 @@ namespace Restaurant.Entity
 		public Visitor GetVisitor()
 		{
 			return _currentVisitor;
+		}
+		public GameObject GetObject()
+		{
+			return gameObject;
 		}
 	}
 }

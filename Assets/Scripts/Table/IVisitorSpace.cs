@@ -10,6 +10,7 @@ namespace Restaurant.Entity
 		public VisitorSpace.TABLE_STATE GetState();
 		public Visitor GetVisitor();
 		public void PutToVisitorPos(GameObject visitorObject);
+		public GameObject GetObject();
 
 	}
 }

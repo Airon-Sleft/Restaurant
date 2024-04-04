@@ -4,7 +4,7 @@ using UnityEngine.AI;
 
 public abstract class Unit : MonoBehaviour, IUnit
 {
-	private Animator animator;
+	protected Animator animator;
 	private UnityMove _uMove;
 	protected virtual void Awake()
 	{
