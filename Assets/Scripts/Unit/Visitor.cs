@@ -43,10 +43,6 @@ namespace Restaurant.Entity
 			ClearDestination();
 			visitorSpace.SeatVisitor(this);
 		}
-		public void TakeFromTable()
-		{
-			_currentVisitorSpace.ClearVisitor();
-		}
 		public IVisitorSpace GetTable()
 		{
 			return _currentVisitorSpace;

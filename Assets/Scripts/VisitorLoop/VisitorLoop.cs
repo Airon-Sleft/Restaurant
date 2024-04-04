@@ -58,7 +58,7 @@ namespace Restaurant.General
 			if (_isStateWaitTime && Time.time >= _timeForNewState)
 			{
 				_isStateWaitTime = false;
-				OnStateChange();
+				ChangeState();
 			}
 		}
 		public void OnGotExit()
@@ -70,50 +70,31 @@ namespace Restaurant.General
 		{
 			if (_currentState == VISITOR_STATE.FREE)
 			{
-				waiter.ClearVisitor();
 				_currentWaiter = waiter;
-				waiter.SetVisitor(_visitor);
-				_currentState = VISITOR_STATE.FOLLOW_TO_WAITER;
+				ChangeState();
 			}
 		}
 		public void SendToTable(IVisitorSpace visitorSpace)
 		{
 			if (_currentState != VISITOR_STATE.FOLLOW_TO_WAITER) return;
-			_currentState = VISITOR_STATE.FOLLOW_TO_TABLE;
 			_currentTable = visitorSpace;
-			_currentWaiter.ClearVisitor();
-			_currentWaiter = null;
-			_visitor.SetDestination(visitorSpace.GetPos(), 0.5f);
-			visitorSpace.SetState(VisitorSpace.TABLE_STATE.BUSY);
+			ChangeState();
 		}
 		public void OnGotTable(IVisitorSpace visitorSpace)
 		{
 			if (_currentState != VISITOR_STATE.FOLLOW_TO_TABLE || _currentTable != visitorSpace) return;
-			_currentState = VISITOR_STATE.WAIT_FOR_FOOD;
-			_visitor.SeatToTable(visitorSpace);
-			_currentTable.SeatVisitor(_visitor);
-			Manager.LevelManager.MakeFood(_visitor);
+			ChangeState();
 		}
 		public void OnWaiterBringSomething(Waiter waiter)
 		{
-			_currentTable.SetState(VisitorSpace.TABLE_STATE.BUSY);
 			Resource res = waiter.GetResource();
-			_currentResource = res;
 			if (res.IsCorrectVisitor(_visitor))
 			{
+				_currentTable.SetState(VisitorSpace.TABLE_STATE.BUSY);
+				_currentResource = res;
+				_currentResource.ChangeParent(_currentTable.GetObject(), Resource.PARENT_TYPE.VISITOR_TABLE);
 				waiter.ClearResource();
-				res.ChangeParent(_currentTable.GetObject(), Resource.PARENT_TYPE.VISITOR_TABLE);
-				if (_currentState == VISITOR_STATE.WAIT_FOR_FOOD)
-				{
-					_currentState = VISITOR_STATE.EATING;
-					SetTransition(Random.Range(2.5f, 4.5f));
-				}
-				else if (_currentState == VISITOR_STATE.WAIT_FOR_BILL)
-				{
-					res.DestroyObject();
-					_currentTable.ClearVisitor();
-					_currentState = VISITOR_STATE.GOING_TO_EXIT;
-				}
+				ChangeState();
 			}
 		}
 		private void SetTransition(float transitionTime)
@@ -121,14 +102,47 @@ namespace Restaurant.General
 			_isStateWaitTime = true;
 			_timeForNewState = Time.time + transitionTime;
 		}
-		public void OnStateChange()
+		public void ChangeState()
 		{
-			if (_currentState == VISITOR_STATE.EATING)
+			if (_currentState == VISITOR_STATE.FREE)
+			{
+				_currentWaiter.ClearVisitor();
+				_currentWaiter.SetVisitor(_visitor);
+				_currentState = VISITOR_STATE.FOLLOW_TO_WAITER;
+			}
+			else if (_currentState == VISITOR_STATE.FOLLOW_TO_WAITER)
+			{
+				_currentState = VISITOR_STATE.FOLLOW_TO_TABLE;
+				_currentWaiter.ClearVisitor();
+				_currentWaiter = null;
+				_visitor.SetDestination(_currentTable.GetPos(), 0.5f);
+				_currentTable.SetState(VisitorSpace.TABLE_STATE.BUSY);
+			}
+			else if (_currentState == VISITOR_STATE.FOLLOW_TO_TABLE)
+			{
+				_currentState = VISITOR_STATE.WAIT_FOR_FOOD;
+				_visitor.SeatToTable(_currentTable);
+				_currentTable.SeatVisitor(_visitor);
+				Manager.LevelManager.MakeFood(_visitor);
+			}
+			else if (_currentState == VISITOR_STATE.WAIT_FOR_FOOD)
+			{
+				_currentState = VISITOR_STATE.EATING;
+				SetTransition(Random.Range(2.5f, 4.5f));
+			}
+			else if (_currentState == VISITOR_STATE.EATING)
 			{
 				Manager.LevelManager.MakeBill(_visitor);
 				_currentResource.DestroyObject();
 				_currentResource = null;
 				_currentState = VISITOR_STATE.WAIT_FOR_BILL;
+			}
+			else if (_currentState == VISITOR_STATE.WAIT_FOR_BILL)
+			{
+				_currentResource.ChangeParent(_currentTable.GetObject(), Resource.PARENT_TYPE.VISITOR_TABLE);
+				_currentResource.DestroyObject();
+				_currentTable.ClearVisitor();
+				_currentState = VISITOR_STATE.GOING_TO_EXIT;
 			}
 		}
 	}
