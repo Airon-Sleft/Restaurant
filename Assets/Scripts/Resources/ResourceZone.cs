@@ -55,6 +55,7 @@ namespace Restaurant.Resources
 			var table = res.TargetVisitor.GetTable();
 			table.SetState(VisitorSpace.TABLE_STATE.WAIT_FOR_ACTION);
 			res.ChangeParent(waiter.gameObject, Resource.PARENT_TYPE.WAITER);
+			Manager.Instance.Player.UpdateTask();
 		}
 		void Update()
 		{
