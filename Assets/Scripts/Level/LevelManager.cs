@@ -1,5 +1,6 @@
 ﻿using Restaurant.Entity;
 using Restaurant.Resources;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Restaurant.General
@@ -10,6 +11,8 @@ namespace Restaurant.General
 		public void MakeFood(IVisitor targetUnit);
 		public void MakeBill(IVisitor targetUnit);
 		public void EverySecondUpdate();
+		public Resource GetAnyResource();
+		public bool DoesAnyVisitorNeedBringToTable();
 	}
 
 	public class LevelManager : ILevelManager
@@ -44,6 +47,8 @@ namespace Restaurant.General
 		{
 			_lastTimeSpawnVisitor = Time.time;
 			Manager.Instance.LevelHandler.AddVisitor();
+			Manager.Instance.Player.UpdateTask();
+
 		}
 		private int GetVisitorNeedsAction()
 		{
@@ -53,6 +58,20 @@ namespace Restaurant.General
 				if (oneVisitor.IsNeedSomeAction()) count++;
 			}
 			return count;
+		}
+		public bool DoesAnyVisitorNeedBringToTable()
+		{
+			foreach (IVisitor oneVisitor in Manager.Instance.LevelHandler.Visitors)
+			{
+				if (oneVisitor.IsWaitForBringToTable()) return true;
+			}
+			return false;
+		}
+		public Resource GetAnyResource()
+		{
+			Resource resKitchen = _kitchen.GetFirstResource();
+			Resource resCashZone = _cashZone.GetFirstResource();
+			return resKitchen ?? resCashZone;
 		}
 	}
 }

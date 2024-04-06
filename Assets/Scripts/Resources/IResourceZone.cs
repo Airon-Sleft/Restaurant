@@ -2,6 +2,6 @@
 {
 	public interface IResourceZone
 	{
-		public Resource TakeIfPossible();
+		public Resource GetFirstResource();
 	}
 }

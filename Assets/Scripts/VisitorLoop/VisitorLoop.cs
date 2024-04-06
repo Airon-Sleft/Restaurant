@@ -150,6 +150,7 @@ namespace Restaurant.General
 				_currentState = VISITOR_STATE.GOING_TO_EXIT;
 				Manager.Instance.Player.AddMoney(Random.Range(5, 15));
 			}
+			Manager.Instance.Player.UpdateTask();
 		}
 	}
 }

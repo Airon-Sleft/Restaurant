@@ -40,16 +40,9 @@ namespace Restaurant.Resources
 		{
 			_inTriggerNow.Remove(other.gameObject);
 		}
-		public Resource TakeIfPossible()
+		public Resource GetFirstResource()
 		{
-			if (_resources.Count > 0)
-			{
-				Resource res = _resources.FirstOrDefault();
-				_resources.Remove(res);
-				res.DestroyObject();
-				return res;
-			}
-			return null;
+			return _resources.FirstOrDefault();
 		}
 		protected abstract void OnWaiterGotZone(Waiter waiter);
 		private void TryToGiveResource(Waiter waiter)
@@ -74,6 +67,7 @@ namespace Restaurant.Resources
 					_queueOfResources.Remove(res);
 					_resources.Add(res);
 					_lastBuildTime = Time.time;
+					Manager.Instance.Player.UpdateTask();
 				}
 			}
 			else
@@ -81,6 +75,5 @@ namespace Restaurant.Resources
 				_lastBuildTime = Time.time;
 			}
 		}
-
 	}
 }

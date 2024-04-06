@@ -17,7 +17,7 @@ namespace Restaurant.Resources
 			CASH_ZONE,
 			VISITOR_TABLE,
 		}
-
+		public RES_TYPE ResourceType { get { return _resType; } }
 		private RES_TYPE _resType;
 		public IVisitor TargetVisitor { get; private set; }
 		private GameObject _resourceObject;

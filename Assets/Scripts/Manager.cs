@@ -17,17 +17,19 @@ public class Manager : MonoBehaviour
 
     public IPlayer Player { get; private set; }
     private DataManager _dataManager;
+    public GameUIHandler GameUIHandler { get; private set; }
 
     void Awake()
     {
         Instance = this;
+        GameUIHandler = GameObject.Find("Canvas").GetComponent<GameUIHandler>();
         LevelHandler = new LevelHandler();
         LevelManager = LevelHandler.GetLevelManager();
         _dataManager = new DataManager();
         _dataManager.LoadAll();
         Player = new Player(_dataManager);
-    }
-    
+		GameUIHandler.UpdateInfo();
+	}
 
 	private void Update()
 	{

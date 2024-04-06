@@ -58,5 +58,10 @@ namespace Restaurant.Entity
 				_visitorLoop.CurrentState == VisitorLoop.VISITOR_STATE.FOLLOW_TO_WAITER) return true;
 			return false;
 		}
+		public bool IsWaitForBringToTable()
+		{
+			if (_visitorLoop.CurrentState == VisitorLoop.VISITOR_STATE.FREE) return true;
+			return false;
+		}
 	}
 }
