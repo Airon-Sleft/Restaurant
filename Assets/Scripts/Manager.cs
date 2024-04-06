@@ -15,7 +15,7 @@ public class Manager : MonoBehaviour
     public ILevelHandler LevelHandler { get; private set; }
     private float _lastUpdateTime;
 
-    private PlayerData _playerData;
+    public IPlayer Player { get; private set; }
     private DataManager _dataManager;
 
     void Awake()
@@ -25,7 +25,7 @@ public class Manager : MonoBehaviour
         LevelManager = LevelHandler.GetLevelManager();
         _dataManager = new DataManager();
         _dataManager.LoadAll();
-        _playerData = _dataManager.Get<PlayerData>();
+        Player = new Player(_dataManager);
     }
     
 

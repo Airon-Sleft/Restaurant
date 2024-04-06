@@ -28,9 +28,9 @@ namespace Restaurant.Data
 		{
 			foreach (IDataHandler handler in _dataHandlers)
 			{
-				if (handler.DataBase is T)
+				if (handler is T)
 				{
-					return handler.DataBase as T;
+					return handler as T;
 				}
 			}
 			return null;

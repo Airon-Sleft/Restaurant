@@ -5,7 +5,6 @@ namespace Restaurant.Data
 {
 	public interface IDataHandler
 	{
-		public object DataBase { get;  }
 		public void Load();
 		public void Save();
 	}
@@ -17,7 +16,6 @@ namespace Restaurant.Data
 	}
 	public class PlayerDataHandler : IDataHandler
 	{
-		public object DataBase { get { return Data; } }
 		public PlayerData Data { get; private set; }
 		private readonly IDataIO<PlayerData> _dataIO;
 		public PlayerDataHandler()

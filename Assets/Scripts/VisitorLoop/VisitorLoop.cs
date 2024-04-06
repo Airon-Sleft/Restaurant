@@ -69,6 +69,8 @@ namespace Restaurant.General
 		public void OnGotExit()
 		{
 			Manager.Instance.LevelHandler.RemoveVisitor(_visitor);
+			Manager.Instance.Player.AddServedVisitor();
+
 		}
 		public void OnGotWaiter(Waiter waiter)
 		{
@@ -146,6 +148,7 @@ namespace Restaurant.General
 				_currentResource.DestroyObject();
 				_currentTable.ClearVisitor();
 				_currentState = VISITOR_STATE.GOING_TO_EXIT;
+				Manager.Instance.Player.AddMoney(Random.Range(5, 15));
 			}
 		}
 	}
