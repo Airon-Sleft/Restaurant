@@ -52,5 +52,11 @@ namespace Restaurant.Entity
 			base.CheckAnimation();
 			_visitorLoop.Update();
 		}
+		public bool IsNeedSomeAction()
+		{
+			if (_visitorLoop.CurrentState == VisitorLoop.VISITOR_STATE.FREE ||
+				_visitorLoop.CurrentState == VisitorLoop.VISITOR_STATE.FOLLOW_TO_WAITER) return true;
+			return false;
+		}
 	}
 }

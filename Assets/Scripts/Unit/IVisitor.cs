@@ -3,5 +3,6 @@
 	public interface IVisitor
 	{
 		public IVisitorSpace GetTable();
+		public bool IsNeedSomeAction();
 	}
 }

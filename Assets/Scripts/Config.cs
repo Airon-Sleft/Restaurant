@@ -21,5 +21,7 @@ namespace Restaurant.General
 
 		public float FoodBuildTime;
 		public float BillBuildTime;
+		[Tooltip("Minimal CD between spawn Visitor in Seconds")]
+		public int CDVisitorSpawn;
 	}
 }

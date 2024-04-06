@@ -42,6 +42,11 @@ namespace Restaurant.General
 						_visitor.SetDestination(_currentWaiter.gameObject, 3.0f);
 						break;
 					}
+				case VISITOR_STATE.FOLLOW_TO_TABLE:
+					{
+						_visitor.SetDestination(_currentTable.GetPos(), 0.5f);
+						break;
+					}
 				case VISITOR_STATE.WAIT_FOR_FOOD:
 				case VISITOR_STATE.WAIT_FOR_BILL:
 				case VISITOR_STATE.EATING:
@@ -64,7 +69,6 @@ namespace Restaurant.General
 		public void OnGotExit()
 		{
 			Manager.Instance.LevelHandler.RemoveVisitor(_visitor);
-			Manager.Instance.LevelHandler.AddVisitor();
 		}
 		public void OnGotWaiter(Waiter waiter)
 		{
@@ -115,7 +119,6 @@ namespace Restaurant.General
 				_currentState = VISITOR_STATE.FOLLOW_TO_TABLE;
 				_currentWaiter.ClearVisitor();
 				_currentWaiter = null;
-				_visitor.SetDestination(_currentTable.GetPos(), 0.5f);
 				_currentTable.SetState(VisitorSpace.TABLE_STATE.BUSY);
 			}
 			else if (_currentState == VISITOR_STATE.FOLLOW_TO_TABLE)

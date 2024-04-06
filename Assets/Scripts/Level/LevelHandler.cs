@@ -6,10 +6,20 @@ using UnityEngine;
 
 namespace Restaurant.General
 {
-	public class LevelHandler
+	public interface ILevelHandler
 	{
-		private List<GameObject> _tables = new List<GameObject>();
+		public List<Visitor> Visitors { get; }
+		public ILevelManager GetLevelManager();
+		public void AddVisitor();
+		public void RemoveVisitor(Visitor visitor);
+		public int GetFreeTableCount();
+	}
+
+	public class LevelHandler : ILevelHandler
+	{
+		private List<VisitorSpace> _tables = new ();
 		private List<Visitor> _visitors = new ();
+		public List<Visitor> Visitors { get { return _visitors; } }
 		private LevelCreator _levelCreator;
 		private KitchenZone _kitchen;
 		private CashZone _cashZone;
@@ -23,9 +33,8 @@ namespace Restaurant.General
 			_cashZone = _levelCreator.CreateCashZone();
 			_exitObject = _levelCreator.CreateExit();
 			_levelManager = new LevelManager(_kitchen, _cashZone, _exitObject);
-			AddVisitor();
 		}
-		public LevelManager GetLevelManager()
+		public ILevelManager GetLevelManager()
 		{
 			return _levelManager;
 		}
@@ -38,6 +47,15 @@ namespace Restaurant.General
 		{
 			_visitors.Remove(visitor);
 			GameObject.Destroy(visitor.gameObject);
+		}
+		public int GetFreeTableCount()
+		{
+			int count = 0;
+			foreach (VisitorSpace oneSpace in _tables)
+			{
+				if (oneSpace.IsFree()) count++;
+			}
+			return count;
 		}
 	}
 }

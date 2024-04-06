@@ -52,7 +52,7 @@ namespace Restaurant.Entity
 		}
 		public Vector3 GetPos()
 		{
-			return transform.position + transform.TransformPoint(new Vector3(0,0,-1.0f));
+			return transform.TransformPoint(new Vector3(0, 0, -1.0f));
 		}
 		public void PutToVisitorPos(GameObject visitorObject)
 		{
@@ -70,6 +70,11 @@ namespace Restaurant.Entity
 		public GameObject GetObject()
 		{
 			return gameObject;
+		}
+		public bool IsFree()
+		{
+			if (_currentState == TABLE_STATE.UNDEFINED || _currentState == TABLE_STATE.FREE_FOR_VISITOR) return true;
+			return false;
 		}
 	}
 }

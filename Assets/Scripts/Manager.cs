@@ -11,8 +11,8 @@ public class Manager : MonoBehaviour
     [SerializeField] private Config config;
     public Config Config {  get { return config; } }
     public static Manager Instance { get; private set; }
-    public static LevelManager LevelManager { get; private set; }
-    public LevelHandler LevelHandler { get; private set; }
+    public static ILevelManager LevelManager { get; private set; }
+    public ILevelHandler LevelHandler { get; private set; }
     private float _lastUpdateTime;
 
     private PlayerData _playerData;
@@ -34,6 +34,7 @@ public class Manager : MonoBehaviour
 		if (Time.time - _lastUpdateTime >= 1.0f)
         {
             _lastUpdateTime = Time.time;
+            LevelManager.EverySecondUpdate();
         }
 	}
 }

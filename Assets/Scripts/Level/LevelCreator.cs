@@ -1,16 +1,17 @@
-﻿using Restaurant.Resources;
+﻿using Restaurant.Entity;
+using Restaurant.Resources;
 using System.Collections.Generic;
 using UnityEngine;
 namespace Restaurant.General
 {
 	public class LevelCreator
 	{
-		public List<GameObject> CreateTables()
+		public List<VisitorSpace> CreateTables()
 		{
-			List<GameObject> tables = new List<GameObject>(Manager.Instance.Config.tablesPosition.Count);
+			List<VisitorSpace> tables = new List<VisitorSpace>(Manager.Instance.Config.tablesPosition.Count);
 			foreach (Vector3 pos in Manager.Instance.Config.tablesPosition)
 			{
-				GameObject oneTable = GameObject.Instantiate(Manager.Instance.Config.tablePrefab, pos, Manager.Instance.Config.tablePrefab.transform.rotation);
+				VisitorSpace oneTable = GameObject.Instantiate(Manager.Instance.Config.tablePrefab, pos, Manager.Instance.Config.tablePrefab.transform.rotation).GetComponent<VisitorSpace>();
 				tables.Add(oneTable);
 			}
 			return tables;

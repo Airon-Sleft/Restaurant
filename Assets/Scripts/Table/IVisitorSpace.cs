@@ -11,6 +11,7 @@ namespace Restaurant.Entity
 		public Visitor GetVisitor();
 		public void PutToVisitorPos(GameObject visitorObject);
 		public GameObject GetObject();
+		public bool IsFree();
 
 	}
 }
