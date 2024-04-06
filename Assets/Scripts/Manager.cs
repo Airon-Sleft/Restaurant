@@ -4,6 +4,7 @@ using Restaurant.General;
 using Restaurant.Resources;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Manager : MonoBehaviour
@@ -37,6 +38,22 @@ public class Manager : MonoBehaviour
         {
             _lastUpdateTime = Time.time;
             LevelManager.EverySecondUpdate();
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GameManager.Instance.ExitTheGame();
+            //if (_isGameActive)
+            //{
+            //    _isGameActive = false;
+            //    Time.timeScale = 0.0f;
+            //    GameManager.SceneManager.Load(ISceneManager.SCENE.MAIN_MENU, UnityEngine.SceneManagement.LoadSceneMode.Additive);
+            //}
+            //else
+            //{
+            //    _isGameActive = true;
+            //    Time.timeScale = 1.0f;
+            //    GameManager.SceneManager.Unload(ISceneManager.SCENE.MAIN_MENU);
+            //}
         }
 	}
 }

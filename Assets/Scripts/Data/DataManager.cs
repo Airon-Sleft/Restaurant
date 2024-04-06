@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Restaurant.General;
+using System.Collections.Generic;
 
 namespace Restaurant.Data
 {
@@ -8,7 +9,7 @@ namespace Restaurant.Data
 
 		public DataManager()
 		{
-			_dataHandlers.Add(new PlayerDataHandler());
+			_dataHandlers.Add(new PlayerDataHandler(GameManager.Instance.PlayerName));
 		}
 		public void LoadAll()
 		{

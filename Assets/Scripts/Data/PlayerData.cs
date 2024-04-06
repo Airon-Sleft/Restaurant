@@ -18,9 +18,9 @@ namespace Restaurant.Data
 	{
 		public PlayerData Data { get; private set; }
 		private readonly IDataIO<PlayerData> _dataIO;
-		public PlayerDataHandler()
+		public PlayerDataHandler(string playerName)
 		{
-			_dataIO = DataIOFactory<PlayerData>.Create("gameData");
+			_dataIO = DataIOFactory<PlayerData>.Create(playerName + "gameData");
 		}
 		public void Load()
 		{
